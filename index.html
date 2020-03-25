@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>广宁股份-智慧视频分析系统</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="no" />
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" href="resource/logo-small.png" type="image/png" sizes="16x16">
+    <link rel="stylesheet" type="text/css" href="resource/main.css" />
+</head>
+<body>
+  <div class="wrap subpage__wrap">
+    <div class="logo-wrap">
+      <div class="logo"></div>
+    </div>
+    <div class="head">
+      <div class="label label2"></div>
+      <div class="title title_videoConcentration"></div>
+    </div>
+    <div class="introduce">
+      <p>资讯爆炸的时代，你还在为大海捞针的关键信息提取而烦恼吗？你要的黑科技就在这里</p>
+    </div>
+    <div class="content">
+      <div class="title">场景</div>
+      <div class="video__box">
+        <video src="resource/prod-demo.mp4" id="video" preload="auto"></video>
+        <div class="playbtn"></div>
+      </div>
+      <div class="itemIntroduce">视频精炼，分秒提取关键信息，高效定位关注点（人、车、道路病害），几分钟还原来龙去脉，舍弃包罗万象的繁琐，尽享一网打尽的关注点，让统筹大局又锁定细节目标的你高枕无忧</div>
+    </div>
+  </div>
+</body>
+<script type="text/javascript" src="resource/sona.min.js"></script>
+<script type="text/javascript">
+(function() {
+	var orientation = new Sona.Orientation({//横屏
+		show: 'landscape', // portrait 为竖屏提示, 默认为 landscape
+		// text: '翻转屏幕体验更好的效果', // 自定义文字提示
+		// transparent: true, // 使用半透明背景色, 默认为 false
+		// canClose: true, // 允许用户关闭提示, 默认为 false
+	});
+	var share = new Sona.Share({//分享
+		// title: '分享标题',
+		// desc: '分享关键词',
+		// thumb: '../images/share.png'
+	});
+	var scale =new Sona.Scale({//rem
+		actualWidth:750,
+		actualHeight:1208
+	})
+})();
+</script>
+<script type="text/javascript" src="resource/jquery-2.0.0.min.js"></script>
+<script type="text/javascript">
+  window.onload= function () {
+    const video = document.getElementById('video');
+    $('.playbtn').on('click', function() {
+      video.play();
+    })
+    $('#video').on('click', function() {
+      video.pause();
+    })
+    video.onplay = function () {
+      $('.playbtn').addClass('hide');
+    }
+    video.onpause = function () {
+      $('.playbtn').removeClass('hide');
+    }
+  }
+</script>
+</html>
