@@ -1,0 +1,14 @@
+.main-view {
+  position: relative;
+  // width: 80%;
+  height: 100%;
+  grid-area: "main-view";
+}
+
+.right-sidebar {
+  position: relative;;
+  background-color: white;
+  // width: 20%;
+  height: 100%;
+  grid-area: "right-sidebar";
+}

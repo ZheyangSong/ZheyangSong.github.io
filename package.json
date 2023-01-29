@@ -1,0 +1,54 @@
+{
+  "name": "zheyangsong.github.io",
+  "version": "1.0.0",
+  "description": "Zheyang Song's github pages",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode=production --node-env=production",
+    "build:dev": "webpack --mode=development",
+    "build:prod": "webpack --mode=production --node-env=production",
+    "watch": "webpack --watch",
+    "serve": "webpack serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZheyangSong/ZheyangSong.github.io.git"
+  },
+  "author": "Zheyang Song <jerome_soung@hotmail.com> (https://github.com/ZheyangSong)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ZheyangSong/ZheyangSong.github.io/issues"
+  },
+  "homepage": "https://github.com/ZheyangSong/ZheyangSong.github.io#readme",
+  "devDependencies": {
+    "@types/react-dom": "^18.0.10",
+    "@webpack-cli/generators": "^3.0.1",
+    "autoprefixer": "^10.4.13",
+    "css-loader": "^6.7.3",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.7.2",
+    "postcss": "^8.4.21",
+    "postcss-loader": "^7.0.2",
+    "prettier": "^2.8.3",
+    "sass": "^1.57.1",
+    "sass-loader": "^13.2.0",
+    "style-loader": "^3.3.1",
+    "ts-loader": "^9.4.2",
+    "typescript": "^4.9.4",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.11.1",
+    "workbox-webpack-plugin": "^6.5.4"
+  },
+  "dependencies": {
+    "@react-three/drei": "^9.56.5",
+    "@react-three/fiber": "^8.10.1",
+    "@types/three": "^0.148.1",
+    "antd": "^5.1.6",
+    "point-cloud-clustering": "file:../point-cloud-clustering/point-cloud-clustering-1.0.0.tgz",
+    "rc-virtual-list": "^3.4.13",
+    "three": "^0.149.0",
+    "worker-swarmer": "^2.0.0"
+  }
+}
