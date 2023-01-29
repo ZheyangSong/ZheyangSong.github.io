@@ -30,7 +30,7 @@ console.log(selectedPoints)
       !selectedPoints && <primitive object={result} />
       {selectedPoints && (
         <Points positions={highlighted}>
-          <pointsMaterial color={0x32cd32} size={1} />
+          <pointsMaterial color={0x32cd32} size={0.3} />
         </Points>
       )}
     </group>
