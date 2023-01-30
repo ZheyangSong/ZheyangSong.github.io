@@ -2,7 +2,6 @@ import "./app.scss";
 import React, { FC, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { CameraControls } from "@react-three/drei";
-import { Box } from "./box";
 import { PCDScene } from "./pcd-scene";
 import frameBinary from "../resource/pcd-binary/107.pcd";
 import { useClusteredPCDLoader } from "./hooks";
@@ -15,7 +14,7 @@ export const App: FC<{}> = () => {
   return (
     <>
       <div className="main-view">
-        <Canvas camera={{ position: [0, 0, (loaded.result?.geometry.boundingSphere.radius ?? 10) * 2.3], fov: 60, up: [0, 0, 1] }}>
+        <Canvas camera={{ position: [loaded.center.x, loaded.center.y, (loaded.radius ?? 10) * 1.3], fov: 60, up: [0, 0, 1] }}>
           <ambientLight />
           <pointLight position={[10, 10, 10]} />
           <PCDScene {...loaded} selectedCluster={selectedCluster}/>

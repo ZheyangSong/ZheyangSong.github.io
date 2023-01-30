@@ -46,6 +46,7 @@
     "@react-three/fiber": "^8.10.1",
     "@types/three": "^0.148.1",
     "antd": "^5.1.6",
+    "ml-matrix": "^6.10.4",
     "point-cloud-clustering": "^1.0.0",
     "rc-virtual-list": "^3.4.13",
     "three": "^0.149.0",

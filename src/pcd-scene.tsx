@@ -1,36 +1,32 @@
 import React, { FC } from "react";
 import { useClusteredPCDLoader } from "./hooks";
-import { PointsMaterial } from "three";
 import { Points } from "@react-three/drei";
 
 export const PCDScene: FC<
   ReturnType<typeof useClusteredPCDLoader> & { selectedCluster?: number | null }
-> = ({ clusters, result, selectedCluster }) => {
+> = ({ clusters, allPoints, gng, selectedCluster }) => {
 
-  if (!result) {
+  if (!allPoints) {
     return;
   }
 
-  const material = result.material as PointsMaterial;
-  material.size = 0.01;
-  material.needsUpdate = true;
-  let highlighted: Float32Array;
-
   const selectedPoints = clusters[selectedCluster];
+  let highlighted: Float32Array = selectedPoints && selectedPoints.buffer;
+  let baseColor = selectedPoints ? 0xffffff : 0x32cd32;
 
-  if (selectedPoints) {
-    material.color.setHex(0xffffff);
-console.log(selectedPoints)
-    highlighted = selectedPoints.buffer;
-  } else {
-    material.color.setHex(0x32cd32);
-  }
   return (
     <group>
-      !selectedPoints && <primitive object={result} />
+      <Points positions={allPoints as Float32Array}>
+        <pointsMaterial color={baseColor} size={0.03} />
+      </Points>
       {selectedPoints && (
         <Points positions={highlighted}>
-          <pointsMaterial color={0x32cd32} size={0.3} />
+          <pointsMaterial color={0x32cd32} size={0.05} />
+        </Points>
+      )}
+      {gng && gng.pG.length && (
+        <Points positions={new Float32Array(gng.pG.flat())}>
+          <pointsMaterial color={0xff0000} size={0.05} />
         </Points>
       )}
     </group>
