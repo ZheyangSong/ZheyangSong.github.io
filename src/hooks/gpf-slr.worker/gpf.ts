@@ -1,10 +1,22 @@
-import { Matrix, SingularValueDecomposition } from 'ml-matrix';
+import { Matrix, SingularValueDecomposition } from "ml-matrix";
 
-export function GPF(points: number[][], { maxItrs = 50, nLPR = 50, thSeed = 0.02, thDist = 0.12 }: Partial<{ maxItrs: number; nLPR: number; thSeed: number; thDist: number; }> = {}) {
+export function GPF(
+  points: number[][],
+  {
+    maxItrs = 50,
+    nLPR = 50,
+    thSeed = 0.02,
+    thDist = 0.12,
+  }: Partial<{
+    maxItrs: number;
+    nLPR: number;
+    thSeed: number;
+    thDist: number;
+  }> = {}
+) {
   let pG = extractInitialSeeds(points, nLPR, thSeed);
   let pNG: number[][] = [];
 
-  process.env.NODE_ENV === "development" && console.time('gpf');
   for (let i = 0; i < maxItrs; i++) {
     const planeG = estimatePlane(pG);
 
@@ -18,10 +30,10 @@ export function GPF(points: number[][], { maxItrs = 50, nLPR = 50, thSeed = 0.02
       }
     }
   }
-  process.env.NODE_ENV === "development" && console.timeEnd('gpf');
 
   return {
-    pG, pNG
+    pG,
+    pNG,
   };
 }
 
@@ -30,19 +42,22 @@ function extractInitialSeeds(points: number[][], nLPR: number, thSeed: number) {
 
   const lpr = avg(sorted.slice(0, nLPR));
 
-  const seeds = points.filter(p => p[2] < lpr[2] + thSeed);
+  const seeds = points.filter((p) => p[2] < lpr[2] + thSeed);
 
   return seeds;
 }
 
 function avg(points: number[][]) {
-  const sum = points.reduce((s, p) => {
-    s[0] += p[0];
-    s[1] += p[1];
-    s[2] += p[2];
+  const sum = points.reduce(
+    (s, p) => {
+      s[0] += p[0];
+      s[1] += p[1];
+      s[2] += p[2];
 
-    return s;
-  }, [0, 0, 0]);
+      return s;
+    },
+    [0, 0, 0]
+  );
 
   const n = points.length;
 
@@ -51,19 +66,27 @@ function avg(points: number[][]) {
 
 function estimatePlane(points: number[][]) {
   const pAvg = avg(points);
-  const cov = points.reduce((cm, p) => {
-    const diff = [p[0] - pAvg[0], p[1] - pAvg[1], p[2] - pAvg[2]];
-    const op = outerProduct3(diff, diff);
+  const cov = points.reduce(
+    (cm, p) => {
+      const diff = [p[0] - pAvg[0], p[1] - pAvg[1], p[2] - pAvg[2]];
+      const op = outerProduct3(diff, diff);
 
-    return matrixSum3(cm, op);
-  }, [[0, 0, 0], [0, 0, 0], [0, 0, 0]]);
+      return matrixSum3(cm, op);
+    },
+    [
+      [0, 0, 0],
+      [0, 0, 0],
+      [0, 0, 0],
+    ]
+  );
 
   const svd = new SingularValueDecomposition(new Matrix(cov));
   const n = svd.leftSingularVectors.getColumn(2);
   const d = -(pAvg[0] * n[0] + pAvg[1] * n[1] + pAvg[2] * n[2]);
 
   return {
-    n, d,
+    n,
+    d,
   };
 }
 
@@ -83,6 +106,18 @@ function matrixSum3(m1: number[][], m2: number[][]) {
   ];
 }
 
-function distanceToGround(point: number[], ground: {n: number[]; d: number}) {
-  return Math.abs(point[0] * ground.n[0] + point[1] * ground.n[1] + point[2] * ground.n[2] + ground.d) / Math.sqrt(ground.n[0] * ground.n[0] + ground.n[1] * ground.n[1] + ground.n[2] * ground.n[2]);
+function distanceToGround(point: number[], ground: { n: number[]; d: number }) {
+  return (
+    Math.abs(
+      point[0] * ground.n[0] +
+        point[1] * ground.n[1] +
+        point[2] * ground.n[2] +
+        ground.d
+    ) /
+    Math.sqrt(
+      ground.n[0] * ground.n[0] +
+        ground.n[1] * ground.n[1] +
+        ground.n[2] * ground.n[2]
+    )
+  );
 }

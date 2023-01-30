@@ -1,16 +1,26 @@
-import React, { FC } from "react";
+import React, { FC, useMemo } from "react";
 import { useClusteredPCDLoader } from "./hooks";
 import { Points } from "@react-three/drei";
 
-export const PCDScene: FC<
-  ReturnType<typeof useClusteredPCDLoader> & { selectedCluster?: number | null }
-> = ({ clusters, allPoints, gng, selectedCluster }) => {
+type TLoadedData = ReturnType<typeof useClusteredPCDLoader>;
 
+export const PCDScene: FC<
+  TLoadedData & { selectedCluster?: number | null }
+> = ({ clusters, allPoints, gng, selectedCluster }) => {
   if (!allPoints) {
     return;
   }
 
-  const selectedPoints = clusters[selectedCluster];
+  const clusterMap = useMemo(
+    () =>
+      clusters.reduce((m, c) => {
+        m[c.cId] = c;
+
+        return m;
+      }, {} as Record<number, TLoadedData["clusters"][0]>),
+    [clusters]
+  );
+  const selectedPoints = clusterMap[selectedCluster];
   let highlighted: Float32Array = selectedPoints && selectedPoints.buffer;
   let baseColor = selectedPoints ? 0xffffff : 0x32cd32;
 
@@ -20,8 +30,8 @@ export const PCDScene: FC<
         <pointsMaterial color={baseColor} size={0.03} />
       </Points>
       {selectedPoints && (
-        <Points positions={highlighted}>
-          <pointsMaterial color={0x32cd32} size={0.05} />
+        <Points key={selectedCluster} positions={highlighted}>
+          <pointsMaterial color={0x32cd32} size={0.1} />
         </Points>
       )}
       {gng && gng.pG.length && (

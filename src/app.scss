@@ -2,13 +2,21 @@
   position: relative;
   // width: 80%;
   height: 100%;
-  grid-area: "main-view";
+  grid-area: main-view;
 }
 
 .right-sidebar {
-  position: relative;;
+  position: relative;
   background-color: white;
   // width: 20%;
   height: 100%;
-  grid-area: "right-sidebar";
+  grid-area: right-sidebar;
+}
+
+.statistics {
+  position: relative;
+  background-color: white;
+  // width: 20%;
+  height: 100%;
+  grid-area: statistics;
 }

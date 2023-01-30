@@ -3,8 +3,10 @@
   height: 100vh;
   display: grid;
   grid-template-columns: 4fr 1fr;
-  grid-template-rows: auto;
-  grid-template-areas: 
-  "main-view right-sidebar";
+  grid-template-rows: 2fr 1fr;
+  grid-template-areas:
+  "main-view right-sidebar"
+  "main-view statistics";
+  gap: 10px;
   background-color: black;
 }
