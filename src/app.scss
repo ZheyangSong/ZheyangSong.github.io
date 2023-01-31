@@ -5,6 +5,12 @@
   grid-area: main-view;
 }
 
+.controller {
+  position: relative;
+  height: 100%;
+  grid-area: controller;
+}
+
 .right-sidebar {
   position: relative;
   background-color: white;

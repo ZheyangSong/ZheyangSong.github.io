@@ -4,7 +4,7 @@ import { List } from "antd";
 import { useClusteredPCDLoader } from "./hooks";
 
 export const ClusterList: FC<
-  ReturnType<typeof useClusteredPCDLoader> & {
+  ReturnType<typeof useClusteredPCDLoader>['clusteredResult'] & {
     onSelectCluster?: (cId: number) => void;
     onDeselectCluster?: () => void;
   }

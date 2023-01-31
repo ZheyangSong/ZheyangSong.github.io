@@ -6,7 +6,7 @@
   grid-template-rows: 2fr 1fr;
   grid-template-areas:
   "main-view right-sidebar"
-  "main-view statistics";
+  "controller statistics";
   gap: 10px;
   background-color: black;
 }

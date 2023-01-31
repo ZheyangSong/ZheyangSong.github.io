@@ -2,7 +2,7 @@ import React, { FC, useMemo } from "react";
 import { useClusteredPCDLoader } from "./hooks";
 import { Points } from "@react-three/drei";
 
-type TLoadedData = ReturnType<typeof useClusteredPCDLoader>;
+type TLoadedData = ReturnType<typeof useClusteredPCDLoader>['clusteredResult'];
 
 export const PCDScene: FC<
   TLoadedData & { selectedCluster?: number | null }
@@ -26,14 +26,14 @@ export const PCDScene: FC<
 
   return (
     <group>
-      <Points positions={allPoints as Float32Array}>
-        <pointsMaterial color={baseColor} size={0.03} />
-      </Points>
       {selectedPoints && (
         <Points key={selectedCluster} positions={highlighted}>
           <pointsMaterial color={0x32cd32} size={0.1} />
         </Points>
       )}
+      <Points positions={allPoints as Float32Array}>
+        <pointsMaterial color={baseColor} size={0.05} />
+      </Points>
       {gng && gng.pG.length && (
         <Points positions={new Float32Array(gng.pG.flat())}>
           <pointsMaterial color={0xff0000} size={0.05} />

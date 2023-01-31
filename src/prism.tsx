@@ -18,7 +18,7 @@ export const Prism: FC<{
   }, [props.xyContour]);
 
   return (
-    <mesh position={[0, 0, -(zRange[1] - zRange[0]) / 2]}>
+    <mesh position={[0, 0, zRange[0]]}>
       <extrudeGeometry
         args={[polygon, { depth: (zRange[1] - zRange[0])}]}
       />

@@ -5,49 +5,12 @@
  * 3. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4934329/
  */
 
-import { BufferAttribute } from "three";
 import { GPF } from "./gpf";
 
 onmessage = (evt) => {
   const { points } = evt.data;
 
-  const ps = toPointArr(points);
-  ps.sort((a, b) => a[0] - b[0]);
+  const t = GPF(points);
 
-  const all: { pG: number[][]; pNG: number[][] } = {
-    pG: [],
-    pNG: [],
-  };
-  const N = 100;
-  const step = Math.ceil(ps.length / N);
-
-  process.env.NODE_ENV === "development" && console.time("gpf");
-  for (let i = 0; i < N; i++) {
-    const t = GPF(ps.slice(i * step, Math.min((i + 1) * step, ps.length)));
-
-    all.pG.push(...t.pG);
-    all.pNG.push(...t.pNG);
-  }
-  process.env.NODE_ENV === "development" && console.timeEnd("gpf");
-  console.log(all);
-
-  self.postMessage(all);
+  self.postMessage(t);
 };
-
-function toPointArr(posAttr: BufferAttribute) {
-  const arr = posAttr.array;
-  const step = posAttr.itemSize;
-  const points = new Array<number[]>(arr.length / step);
-
-  for (let i = 0; i < arr.length; i += step) {
-    const cord = new Array(step);
-
-    for (let j = 0; j < step; j++) {
-      cord[j] = arr[i + j];
-    }
-
-    points[i / step] = cord;
-  }
-
-  return points;
-}

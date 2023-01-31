@@ -23,6 +23,7 @@
   "homepage": "https://github.com/ZheyangSong/ZheyangSong.github.io#readme",
   "devDependencies": {
     "@types/react-dom": "^18.0.10",
+    "@types/webpack-env": "^1.18.0",
     "@webpack-cli/generators": "^3.0.1",
     "autoprefixer": "^10.4.13",
     "css-loader": "^6.7.3",
