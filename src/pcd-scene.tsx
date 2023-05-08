@@ -1,6 +1,7 @@
-import React, { FC, useMemo } from "react";
+import React, { FC, useMemo, useRef, useEffect } from "react";
 import { useClusteredPCDLoader } from "./hooks";
 import { Points } from "@react-three/drei";
+import { useThree } from "@react-three/fiber";
 
 type TLoadedData = ReturnType<typeof useClusteredPCDLoader>['clusteredResult'];
 
@@ -21,8 +22,18 @@ export const PCDScene: FC<
     [clusters]
   );
   const selectedPoints = clusterMap[selectedCluster];
+  const keying = useRef(0);
   let highlighted: Float32Array = selectedPoints && selectedPoints.buffer;
   let baseColor = selectedPoints ? 0xffffff : 0x32cd32;
+  const { invalidate } = useThree();
+
+  useEffect(() => {
+    keying.current++;
+  }, [allPoints]);
+
+  useEffect(() => {
+    invalidate();
+  }, [allPoints, gng, selectedCluster, clusters]);
 
   return (
     <group>
@@ -31,11 +42,11 @@ export const PCDScene: FC<
           <pointsMaterial color={0x32cd32} size={0.1} />
         </Points>
       )}
-      <Points positions={allPoints as Float32Array}>
+      <Points key={`${keying.current}-main`} positions={allPoints as Float32Array}>
         <pointsMaterial color={baseColor} size={0.05} />
       </Points>
       {gng && gng.pG.length && (
-        <Points positions={new Float32Array(gng.pG.flat())}>
+        <Points key={`${keying.current}-ground`} positions={new Float32Array(gng.pG.flat())}>
           <pointsMaterial color={0xff0000} size={0.05} />
         </Points>
       )}

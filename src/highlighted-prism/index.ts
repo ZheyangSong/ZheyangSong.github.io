@@ -1,0 +1,1 @@
+export { HighlightedPrism } from "./highlighter";

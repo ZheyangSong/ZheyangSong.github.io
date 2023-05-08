@@ -3,9 +3,9 @@ import { BufferAttribute } from "three";
 import { PCDLoader } from "three/examples/jsm/loaders/PCDLoader";
 import { useLoader } from "@react-three/fiber";
 import { swarm, REQ_EARLY_TERMINATION_TOKEN } from "worker-swarmer";
-import { groundPointFitting } from './gpf-slr';
+import { groundPointFitting } from "./gpf-slr";
 
-type IClusters = {
+export type IClusters = {
   buffer: Float32Array;
   pIndices: number[];
   cId: number;
@@ -33,6 +33,7 @@ export function useClusteredPCDLoader(filePath: string) {
   const result = useLoader(PCDLoader, filePath);
   const allPoints = (result.geometry.attributes.position as BufferAttribute)
     .array;
+
   const [clusteredResult, setClusteredResult] = useState({
     allPoints,
     radius: result.geometry.boundingSphere.radius,
@@ -43,31 +44,37 @@ export function useClusteredPCDLoader(filePath: string) {
   const [groundProcessingTime, logGroundProcessingTime] = useState(Infinity);
   const [clusteringTime, logClusteringTime] = useState(Infinity);
 
-  console.log(result);
   useEffect(() => {
+    setClusteredResult((prevState) => ({
+      ...prevState,
+      allPoints,
+      radius: result.geometry.boundingSphere.radius,
+      center: result.geometry.boundingSphere.center,
+      clusters: [],
+      gng: { pG: [], pNG: [] },
+    }));
+
     logGroundProcessingTime(Infinity);
     logClusteringTime(Infinity);
     let measureStart = performance.now();
 
-    groundPointFitting(result.geometry.attributes.position as BufferAttribute, 10)
-    // groundClassifier({
-    //   points: result.geometry.attributes.position as BufferAttribute,
-    // })
+    groundPointFitting(
+      result.geometry.attributes.position as BufferAttribute,
+      5
+    )
       .then((gng) => {
-        // if (gng !== REQ_EARLY_TERMINATION_TOKEN) {
-          setClusteredResult((prevState) => ({
-            ...prevState,
-            gng,
-          }));
+        setClusteredResult((prevState) => ({
+          ...prevState,
+          gng,
+        }));
 
-          logGroundProcessingTime(performance.now() - measureStart);
+        logGroundProcessingTime(performance.now() - measureStart);
 
-          measureStart = performance.now();
+        measureStart = performance.now();
 
-          return dbscanClusterer({
-            points: new BufferAttribute(new Float32Array(gng.pNG.flat()), 3),
-          });
-        // }
+        return dbscanClusterer({
+          points: new BufferAttribute(new Float32Array(gng.pNG.flat()), 3),
+        });
       })
       .then((clusters) => {
         if (clusters !== REQ_EARLY_TERMINATION_TOKEN) {

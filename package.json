@@ -5,11 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write \"src/**/*.{scss,ts}\"",
     "build": "webpack --mode=production --node-env=production",
     "build:dev": "webpack --mode=development",
     "build:prod": "webpack --mode=production --node-env=production",
     "watch": "webpack --watch",
-    "serve": "webpack serve"
+    "serve": "webpack serve",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -28,6 +30,7 @@
     "autoprefixer": "^10.4.13",
     "css-loader": "^6.7.3",
     "html-webpack-plugin": "^5.5.0",
+    "husky": "^8.0.3",
     "mini-css-extract-plugin": "^2.7.2",
     "postcss": "^8.4.21",
     "postcss-loader": "^7.0.2",
@@ -52,6 +55,6 @@
     "point-cloud-clustering": "^1.0.0",
     "rc-virtual-list": "^3.4.13",
     "three": "^0.149.0",
-    "worker-swarmer": "^2.0.0"
+    "worker-swarmer": "^2.2.1"
   }
 }
