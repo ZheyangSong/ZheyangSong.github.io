@@ -14,6 +14,7 @@ const stylesHandler = isProduction
 const config = {
   entry: "./src/index.tsx",
   output: {
+    filename: "[name].[contenthash].js",
     path: path.resolve(__dirname, "dist"),
   },
   devServer: {
@@ -24,9 +25,10 @@ const config = {
     new HtmlWebpackPlugin({
       template: "index.html",
     }),
-
-    // Add your plugins here
-    // Learn more about plugins from https://webpack.js.org/configuration/plugins/
+    new MiniCssExtractPlugin({
+      filename: "[name].[contenthash].css",
+      chunkFilename: "[contenthash.css",
+    }),
   ],
   module: {
     rules: [
