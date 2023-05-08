@@ -75,7 +75,7 @@ export const App: FC<{}> = () => {
               clusteredResult.center.z - (clusteredResult.radius ?? 10) * 1.3,
             ],
             fov: 60,
-            up: [0, 0, -1],
+            up: [0, 0, 1],
           }}
         >
           <ambientLight intensity={10} />
