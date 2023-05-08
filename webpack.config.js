@@ -25,10 +25,6 @@ const config = {
     new HtmlWebpackPlugin({
       template: "index.html",
     }),
-    new MiniCssExtractPlugin({
-      filename: "[name].[contenthash].css",
-      chunkFilename: "[contenthash.css",
-    }),
   ],
   module: {
     rules: [
@@ -68,9 +64,25 @@ module.exports = () => {
   if (isProduction) {
     config.mode = "production";
 
-    config.plugins.push(new MiniCssExtractPlugin());
+    config.plugins.push(
+      new MiniCssExtractPlugin({
+        filename: "[name].[contenthash].css",
+        chunkFilename: "[contenthash.css",
+      }));
 
-    config.plugins.push(new WorkboxWebpackPlugin.GenerateSW());
+    config.plugins.push(new WorkboxWebpackPlugin.GenerateSW({
+      clientsClaim: true,
+      skipWaiting: true,
+      runtimeCaching: [
+        {
+          urlPattern: /index\.html/,
+          handler: 'NetworkFirst',
+          options: {
+            networkTimeoutSeconds: 10
+          }
+        }
+      ]
+    }));
   } else {
     config.mode = "development";
     config.devtool = "inline-source-map";
