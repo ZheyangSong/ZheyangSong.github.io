@@ -8,30 +8,46 @@ const groundClassifier = swarm<
   maxCount: 10,
 });
 
-export function groundPointFitting(points: BufferAttribute, segmentCount: number = 10) {
+export function groundPointFitting(
+  points: BufferAttribute,
+  segmentCount: number = 10
+) {
   const { array: rawArray, count, itemSize } = points;
-  console.time('prep');
+
   const indices = new Array(count).fill(0).map((_, idx) => idx);
 
-  indices.sort((a, b) => rawArray[a * itemSize] - rawArray[b * itemSize]);
+  indices.sort(
+    (a, b) =>
+      rawArray[a * itemSize] - rawArray[b * itemSize] ||
+      rawArray[a * itemSize + 1] - rawArray[b * itemSize + 1]
+  );
 
   const segments: number[][][] = [];
   const step = Math.ceil(indices.length / segmentCount);
   for (let i = 0; i < segmentCount; i++) {
     const segment = indices
       .slice(i * step, Math.min((i + 1) * step, indices.length))
-      .map(idx => [0, 1, 2].map(offset => rawArray[idx * itemSize + offset]));
-    segments.push(segment);
+      .map((idx) =>
+        [0, 1, 2].map((offset) => rawArray[idx * itemSize + offset])
+      );
+    if (segment.length > 0) {
+      segments.push(segment);
+    }
   }
-  console.timeEnd('prep');
 
-  return Promise.all(segments.map(seg => groundClassifier({ points: seg })))
-    .then((result) => result.reduce<{ pG: number[][]; pNG: number[][]}>((c, cs) => {
-      if (cs !== REQ_EARLY_TERMINATION_TOKEN) {
-        c.pG.push(...cs.pG);
-        c.pNG.push(...cs.pNG);
-      }
+  return Promise.all(
+    segments.map((seg) => groundClassifier({ points: seg }))
+  ).then((result) =>
+    result.reduce<{ pG: number[][]; pNG: number[][] }>(
+      (c, cs) => {
+        if (cs !== REQ_EARLY_TERMINATION_TOKEN) {
+          c.pG.push(...cs.pG);
+          c.pNG.push(...cs.pNG);
+        }
 
-      return c;
-    }, { pG: [], pNG: []}));
+        return c;
+      },
+      { pG: [], pNG: [] }
+    )
+  );
 }

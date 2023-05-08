@@ -1,12 +1,15 @@
+body {
+  margin: 10px;
+}
+
 #root {
-  width: 100vw;
-  height: 100vh;
+  width: calc(100vw - 10px * 2);
+  height: calc(100vh - 10px * 2);
   display: grid;
   grid-template-columns: 4fr 1fr;
   grid-template-rows: 2fr 1fr;
   grid-template-areas:
-  "main-view right-sidebar"
-  "controller statistics";
+    "main-view right-sidebar"
+    "controller statistics";
   gap: 10px;
-  background-color: black;
 }

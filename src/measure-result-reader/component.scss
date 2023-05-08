@@ -1,0 +1,29 @@
+.measure-result-reader {
+  position: relative;
+
+  .drop-zone-indicator {
+    --indicator-color: lightgray;
+    --border-width: 5px;
+
+    position: absolute;
+    pointer-events: none;
+    width: calc(100% - var(--border-width) * 2);
+    height: calc(100% - var(--border-width) * 2);
+    top: 0;
+    left: 0;
+    background-color: rgba(240, 240, 240, 0.3);
+    border: var(--border-width) var(--indicator-color) dashed;
+    border-radius: 2px;
+
+    .inner {
+      position: absolute;
+      pointer-events: none;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 48px;
+      font-weight: bold;
+      color: var(--indicator-color);
+    }
+  }
+}

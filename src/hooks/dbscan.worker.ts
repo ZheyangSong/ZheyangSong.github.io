@@ -24,10 +24,8 @@ function doClustering(posAttr: BufferAttribute) {
 
     points[i / step] = cord;
   }
-  console.time("clustering");
+
   const clusters = dbscan(points, { epsilon: 0.8, minPts: 4 });
-  console.timeEnd("clustering");
-  console.log(clusters);
 
   const ret = clusters.map((pIndices, cId) => {
     const points = getPoints(pIndices, posAttr);

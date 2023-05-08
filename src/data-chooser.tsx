@@ -3,12 +3,10 @@ import { Select } from 'antd';
 
 export const DataChooser: FC<{onSelectDataSrc: (val: string) => void, dataSrcs: { key: string; value: string }[]}> = ({onSelectDataSrc, dataSrcs}) => (
   <Select
-    disabled
     showSearch
     placeholder="Select a pcd file"
     optionFilterProp="children"
     onChange={onSelectDataSrc}
-    // onSearch={onSearch}
     filterOption={(input, option) =>
       (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
     }

@@ -33,16 +33,7 @@ export const ClusterList: FC<
             onMouseLeave={() => onDeselectCluster()}
           >
             <List.Item.Meta title={`cluster ${item.cId}`} />
-            <div
-              style={{
-                height: "100%",
-                overflowY: "scroll",
-                whiteSpace: "break-spaces",
-                overflowWrap: "break-word",
-              }}
-            >
-              {item.pIndices.length}
-            </div>
+            {item.pIndices.length}
           </List.Item>
         )}
       </VirtualList>
