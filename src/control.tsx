@@ -42,6 +42,9 @@ export const Control: FC<{
     <CameraControls
       ref={cameraController}
       maxPolarAngle={Math.PI / 2}
+      minDistance={10}
+      minZoom={0.01}
+      maxDistance={1100}
       onChange={() => invalidate()}
     />
   );

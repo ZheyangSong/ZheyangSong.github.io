@@ -13,7 +13,7 @@ import { IMeasurement, TSensorData } from "./types";
 export interface MeasureResultReaderProps {
   onResultRead: (data: {
     sensorData: TSensorData;
-    measurementData: Pick<IMeasurement, "height" | "length" | "width">;
+    measurementData: Pick<IMeasurement, "height" | "length" | "width"> & { min: number[]; max: number[]; };
   }) => void;
 }
 
@@ -73,6 +73,8 @@ export const MeasureResultReader: FC<MeasureResultReaderProps> = ({ onResultRead
           height: measurementData?.height ?? 0,
           width: measurementData?.width ?? 0,
           length: measurementData?.length ?? 0,
+          min: measurementData?.diagonal.slice(0, 3),
+          max: measurementData?.diagonal.slice(3),
         },
       });
     } catch (e) {

@@ -5,6 +5,7 @@ export interface IMeasurement {
   length: number;
   width: number;
   height: number;
+  diagonal: number[];
 }
 
 export type TSensorData = string;
