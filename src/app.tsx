@@ -13,6 +13,8 @@ import {
   MeasureResultReader,
   MeasureResultReaderProps,
 } from "./measure-result-reader";
+import { IMeasureMeta } from "./types";
+import { MeasuredBBox } from "./measured-bbox";
 
 const cache: { key: string; value: string }[] = [];
 
@@ -24,11 +26,7 @@ importAll(require.context("../resource/pcd-binary/", false, /\.pcd$/));
 
 export const App: FC<{}> = () => {
   const [filePath, setFilePath] = useState<string>(cache[0].value);
-  const [measures, setMeasures] = useState<{
-    width: number;
-    height: number;
-    length: number;
-  } | undefined>();
+  const [measures, setMeasures] = useState<IMeasureMeta | undefined>();
   const [all, setAll] = useState<TLoadResult>({
     clusteredResult: {
       allPoints: [],
@@ -79,6 +77,7 @@ export const App: FC<{}> = () => {
           }}
         >
           <ambientLight intensity={10} />
+          {(measures?.min.length || measures?.max.length) && <MeasuredBBox {...measures} />}
           <PCDScene {...clusteredResult} selectedCluster={selectedCluster} />
           <HighlightedPrism
             clusters={clusteredResult.clusters}
