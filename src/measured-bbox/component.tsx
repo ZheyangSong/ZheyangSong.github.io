@@ -42,11 +42,10 @@ export const MeasuredBBox: FC<IMeasuredBBoxProps> = ({
   ].map(([ruX, ruY, ruZ]) => [pos.x + ruX * xLen, pos.y + ruY * yLen, pos.z + ruZ * zLen]);
 
   return <>
-
-<Box args={[xLen, yLen, zLen]} position={[pos.x, pos.y, pos.z]} material-color="red" material-opacity={0.6} material-transparent={true}/>
-<Line points={points} color="yellow" lineWidth={1.5} segments forceSinglePass />
-<Word color="yellow" fontSize={fontSize} position={lPos} anchorX="-50%">{length} m</Word>
-      <Word color="yellow" fontSize={fontSize} position={wPos} anchorX="-50%">{width} m</Word>
-      <Word color="yellow" fontSize={fontSize} position={hPos} rotateByZ={90} anchorX="-50%">{height} m</Word>
+    <Box args={[xLen, yLen, zLen]} position={[pos.x, pos.y, pos.z]} material-color="red" material-opacity={0.6} material-transparent={true}/>
+    <Line points={points} color="yellow" lineWidth={1.5} segments forceSinglePass />
+    <Word color="yellow" fontSize={fontSize} position={lPos} anchorX="-50%">{length} m</Word>
+    <Word color="yellow" fontSize={fontSize} position={wPos} anchorX="-50%">{width} m</Word>
+    <Word color="yellow" fontSize={fontSize} position={hPos} rotateByZ={90} anchorX="-50%">{height} m</Word>
   </>
 }
