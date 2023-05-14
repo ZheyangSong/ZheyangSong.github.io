@@ -1,1 +1,1 @@
-export { IMeasuredBBoxProps, MeasuredBBox } from './component';
+export { IMeasuredBBoxProps, MeasuredBBox } from "./component";
