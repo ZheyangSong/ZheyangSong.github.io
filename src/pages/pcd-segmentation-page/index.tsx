@@ -1,5 +1,5 @@
-import "./app.scss";
-import React, { Suspense, FC, useState, useEffect } from "react";
+import "./index.scss";
+import React, { Suspense, FC, useState } from "react";
 import { Vector3 } from "three";
 import { Canvas } from "@react-three/fiber";
 import { PCDScene } from "./pcd-scene";
@@ -22,9 +22,9 @@ function importAll(r: ReturnType<typeof require.context>) {
   r.keys().forEach((key) => cache.push({ key, value: r(key) }));
 }
 
-importAll(require.context("../resource/pcd-binary/", false, /\.pcd$/));
+importAll(require.context("./resource/pcd-binary/", false, /\.pcd$/));
 
-export const App: FC<{}> = () => {
+export const PCDSegmentationPage: FC<{}> = () => {
   const [filePath, setFilePath] = useState<string>(cache[0].value);
   const [measures, setMeasures] = useState<IMeasureMeta | undefined>();
   const [all, setAll] = useState<TLoadResult>({
@@ -54,7 +54,7 @@ export const App: FC<{}> = () => {
   const { clusteredResult, clusteringTime, groundProcessingTime } = all;
 
   return (
-    <>
+    <div id="pcd-segmentation">
       <Suspense fallback={<></>}>
         <Loader
           filePath={filePath}
@@ -124,6 +124,6 @@ export const App: FC<{}> = () => {
           </>}
         </div>
       </div>
-    </>
+    </div>
   );
 };

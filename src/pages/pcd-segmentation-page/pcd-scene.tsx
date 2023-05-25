@@ -9,7 +9,7 @@ export const PCDScene: FC<
   TLoadedData & { selectedCluster?: number | null }
 > = ({ clusters, allPoints, gng, selectedCluster }) => {
   if (!allPoints) {
-    return;
+    return null;
   }
 
   const clusterMap = useMemo(
@@ -38,7 +38,7 @@ export const PCDScene: FC<
   return (
     <group>
       {selectedPoints && (
-        <Points key={selectedCluster} positions={highlighted}>
+        <Points key={selectedCluster!} positions={highlighted}>
           <pointsMaterial color={0x32cd32} size={0.1} />
         </Points>
       )}

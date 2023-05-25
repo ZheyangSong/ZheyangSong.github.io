@@ -1,8 +1,11 @@
 import "./index.scss";
-import { createRoot } from "react-dom/client";
 import React from "react";
+import { createRoot } from "react-dom/client";
+import {
+  RouterProvider
+} from "react-router-dom";
 import { ConfigProvider, theme } from "antd";
-import { App } from "./app";
+import { router } from "./routes";
 
 createRoot(document.getElementById("root") as HTMLElement).render(
   <ConfigProvider
@@ -10,6 +13,6 @@ createRoot(document.getElementById("root") as HTMLElement).render(
       algorithm: theme.darkAlgorithm,
     }}
   >
-    <App />
+    <RouterProvider router={router} />
   </ConfigProvider>
 );

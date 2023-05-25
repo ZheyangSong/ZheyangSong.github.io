@@ -29,6 +29,7 @@
     "@types/webpack-env": "^1.18.0",
     "@webpack-cli/generators": "^3.0.4",
     "autoprefixer": "^10.4.14",
+    "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.3",
     "html-webpack-plugin": "^5.5.1",
     "husky": "^8.0.3",
@@ -55,6 +56,7 @@
     "ml-matrix": "^6.10.4",
     "point-cloud-clustering": "^1.0.0",
     "rc-virtual-list": "^3.4.13",
+    "react-router-dom": "^6.11.2",
     "three": "^0.149.0",
     "worker-swarmer": "^2.2.2"
   }
