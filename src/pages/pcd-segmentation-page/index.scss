@@ -3,6 +3,17 @@
   --font-color: white;
 }
 
+#pcd-segmentation {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  grid-template-rows: 2fr 1fr;
+  grid-template-areas:
+    "main-view right-sidebar"
+    "controller statistics";
+  gap: 10px;
+  max-height: 100%;
+}
+
 .main-view {
   background-color: black;
 }

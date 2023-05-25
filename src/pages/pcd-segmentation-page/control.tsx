@@ -7,9 +7,9 @@ export const Control: FC<{
   sphere: { center: Vector3; radius: number } | null;
 }> = ({ sphere }) => {
   const { invalidate } = useThree();
-  const cameraController = useRef<CameraControls>();
+  const cameraController = useRef<CameraControls>(null);
   useFrame((state) => {
-    const newFarPlane = (sphere.radius ?? 10) * 3;
+    const newFarPlane = (sphere?.radius ?? 10) * 3;
 
     if (state.camera.far !== newFarPlane) {
       state.camera.far = newFarPlane;
@@ -20,11 +20,11 @@ export const Control: FC<{
   useEffect(() => {
     if (cameraController.current && sphere) {
       (async () => {
-        await cameraController.current.fitToSphere(
+        await cameraController.current?.fitToSphere(
           new Sphere(sphere.center, sphere.radius),
           false
         );
-        await cameraController.current.setLookAt(
+        await cameraController.current?.setLookAt(
           sphere.center.x,
           sphere.center.y,
           sphere.center.z - sphere.radius * 1.3,
